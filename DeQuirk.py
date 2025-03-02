@@ -264,12 +264,26 @@ def DeQuirkify_Rodere(line):
     line = "RODERE: " + line
     return line
 
+def Dequirkify_Pozzol(line):
+    line = line.replace(line[:8], '')
+    line = list(line)
+    i = 0
+    for c in line:
+        if (line[i].isupper() == True):
+            line[i] = line[i].lower()
+        i+=1
+    line[0] = line[0].upper()
+    line = ''.join(line)
+    line = "POZZOL: " + line
+    return line
+    
+
 
 
 def DeQuirk(line):
     if(line[:2] == "AH" or line[:6] == "ARCJEC"):
         newLine = DeQuirkify_Arcjec(line)
-    elif(line[:2] == "PO" or line[:3] == "TAZ"):
+    elif(line[:3] == "PO:" or line[:3] == "TAZ"):
         newLine = DeQuirkify_Taz(line)
     elif(line[:2] == "WA" or line[:6] == "LAIVAN"):
         newLine = DeQuirkify_Laivan(line)
@@ -297,6 +311,8 @@ def DeQuirk(line):
         newLine = DeQuirkify_Rodere(line)
     elif(line[:2] == "OD" or line[:6] == "HAMIFI"):
         newLine = DeQuirkify_Hamifi(line)
+    elif(line[:6] == "POZZOL"):
+        newLine = Dequirkify_Pozzol(line)
     else:
         newLine = line
     return newLine
