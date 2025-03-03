@@ -23,8 +23,7 @@ try:
     with open("page_count.txt", "r") as file:
             comp_count = file.readline()
 except FileNotFoundError:
-    with open("page_count.txt", "w") as file:
-        file.write(str(page_count))
+        pass
 
 # checks if either the stored page count in "count.txt" is less than the current page count OR if "page_count.txt" doesn't exist (i.e. first run of the program)
 # makes the "pages_as_non-HTML" directory then converts that content into txt files using the beautifulsoup4 library and stores it in the created directory
@@ -50,6 +49,8 @@ if(int(comp_count) != page_count or p.exists != True):
                 print(f"page {i} added")
             except FileNotFoundError:
                 print(f"page {i} not found")
+        with open("page_count.txt", "w") as file:
+            file.write(str(page_count))
     file.close
 
 # makes the "dequirked files" folder if it doesn't exist
