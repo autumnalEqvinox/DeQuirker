@@ -7,11 +7,24 @@ import HTML_DOWNLOADER as down
 import DeQuirk as DQ
 from bs4 import BeautifulSoup
 from pathlib import Path
+import sys
+
+def get_script_folder():
+    # path of main .py or .exe when converted with pyinstaller
+    if getattr(sys, 'frozen', False):
+        script_path = os.path.dirname(sys.executable)
+    else:
+        script_path = os.path.dirname(
+            os.path.abspath(sys.modules['__main__'].__file__)
+        )
+    return script_path
+
+
 
 # saving a bunch of global variables
 directory_name = "pages"
 directory_name2 = "pages_as_non-HTML"
-dir_path = os.path.dirname(os.path.realpath(__file__))
+dir_path = get_script_folder()
 input_path = dir_path + "\\pages_as_non-HTML"
 output_path = dir_path + "\\dequirked_files"
 page_count = int(requests.get("https://api.deconreconstruction.com/pages/count?story.name=vast-error&published_at_null=false").content)#-227
@@ -78,7 +91,7 @@ for i in range(2, page_count + 1):
                 line.rstrip("\n")
 
                 # takes the line and runs the dequirk function in DeQuirk.py
-                newLine = DQ.DeQuirk(line)
+                newLine = DQ.DeQuirk(line, i)
 
                 # deslashify gets rid of '\' chracters that appear in front of commas
                 newLine = DQ.deSlashify(newLine)

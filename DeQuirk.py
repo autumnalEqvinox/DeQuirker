@@ -569,8 +569,8 @@ def DeQuirkify_Keiksi(line):
     return line
 
 
-def DeQuirk(line):
-    if(line[:2] == "AH" or line[:6] == "ARCJEC"):
+def DeQuirk(line, page):
+    if(line[:2] == "AH" or line[:6] == "ARCJEC" or line[:2] == "AM"):
         newLine = DeQuirkify_Arcjec(line)
     elif(line[:3] == "PO:" or line[:3] == "TAZ"):
         newLine = DeQuirkify_Taz(line)
