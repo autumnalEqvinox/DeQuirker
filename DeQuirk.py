@@ -236,6 +236,19 @@ def DeQuirkify_Sestro(line):
     else:
         line = "CF: " + line
     return line
+    
+def DeQuirkify_SestroAlt(line):
+    if(line[:6] == "SESTRO"):
+        line = line.replace(line[:19], '')
+        actual_name = True
+    else:
+        line = line.replace(line[:16], '')
+        actual_name = False
+    if(actual_name):
+        line = "SESTRO: " + line
+    else:
+        line = "CF: " + line
+    return line
 
 def DeQuirkify_Hamifi(line):
     if(line[:6] == "HAMIFI"):
@@ -305,7 +318,6 @@ def DeQuirkify_Turnin(line):
     return line
     
 def DeQuirkify_Secily(line):
-    digit_counter = 0
     if(line[:6] == "SECILY"):
         line = line.replace(line[:8], '')
         actual_name = True
@@ -584,7 +596,7 @@ def DeQuirk(line, page):
         newLine = DeQuirkify_Sova(line)
     elif(line[:2] == "DQ"or line[:6] == "ALBION"):
         newLine = DeQuirkify_Albion(line)
-    elif(line[:2] == "ME" or line[:6] == "OCCEUS"):
+    elif(line[:3] == "ME:" or line[:6] == "OCCEUS"):
         newLine = DeQuirkify_Occeus(line)
     elif(line[:2] == "PD" or line[:6] == "SERPAZ"):
         newLine = DeQuirkify_Serpaz(line)
@@ -595,7 +607,10 @@ def DeQuirk(line, page):
     elif(line[:2] == "EO" or line[:6] == "ELLSEE"):
         newLine = DeQuirkify_Ellsee(line)
     elif(line[:2] == "CF" or line [:6] == "SESTRO"):
-        newLine = DeQuirkify_Sestro(line)
+        if page > 2440:
+            newLine = DeQuirkify_SestroAlt(line)
+        else:
+            newLine = DeQuirkify_Sestro(line)
     elif(line[:6] == "RODERE"):
         newLine = DeQuirkify_Rodere(line)
     elif(line[:2] == "OD" or line[:6] == "HAMIFI"):
